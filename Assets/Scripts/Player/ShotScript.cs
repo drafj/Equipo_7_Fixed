@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShotScript : MonoBehaviour
 {
     int ammo = 1;
+    private float dir;
     public GameObject ammoB;
     public AudioSource noAmmo;
     public AudioSource reLoad;
@@ -20,6 +21,11 @@ public class ShotScript : MonoBehaviour
     }
     void Shot()
     {
+        if (!Moviment.bulletDirection)
+            dir = 0.55f;
+        else
+            dir = -0.55f;
+
         if(Input.GetKeyDown(KeyCode.Q) && sacandoArma == false && GameManager.instance.player.GetComponent<Moviment>().idle && !GameManager.instance.activadorToolKits[0] && !GameManager.instance.activadorToolKits[1] && !GameManager.instance.activadorToolKits[2])
         {
             StartCoroutine("Equipar");
@@ -35,7 +41,7 @@ public class ShotScript : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && ammo >= 1)
             {
-                Instantiate(ammoB, transform.position + (Vector3.right * 0.5f), transform.rotation);
+                Instantiate(ammoB, transform.position + (Vector3.right * dir), transform.rotation);
                 ammo--;
             }
 
